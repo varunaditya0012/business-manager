@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${tool.id == null ? 'Add Tool' : 'Edit Tool'}">Tool Form</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Form Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <a th:href="@{/tools}" class="btn btn-outline-secondary btn-sm mb-2">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Tools
+                </a>
+                <h2 class="fw-bold text-dark mb-1" th:text="${tool.id == null ? 'Add New Tool' : 'Edit Tool'}">Tool Form</h2>
+                <p class="text-muted mb-0">Fill in the specifications for this business tool</p>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <form th:action="@{/tools/save}" th:object="${tool}" method="post" class="needs-validation" novalidate>
+                            <!-- Hidden inputs for ID and CSRF -->
+                            <input type="hidden" th:field="*{id}" />
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" th:if="${_csrf != null}"/>
+
+                            <!-- Tool Name -->
+                            <div class="mb-4">
+                                <label for="name" class="form-label fw-semibold text-dark">Tool Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-lg" id="name" th:field="*{name}" 
+                                       placeholder="e.g. Slack, Jira, GitHub Enterprise" required>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="mb-4">
+                                <label for="description" class="form-label fw-semibold text-dark">Description</label>
+                                <textarea class="form-control" id="description" th:field="*{description}" rows="4" 
+                                          placeholder="Detailed summary of tool capabilities, licenses, or team assignments..."></textarea>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                            </div>
+
+                            <!-- Category and Status Row -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-12 col-md-6">
+                                    <label for="category" class="form-label fw-semibold text-dark">Category <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="category" th:field="*{category}" required>
+                                        <option value="" disabled selected>Select a category</option>
+                                        <option value="Productivity">Productivity</option>
+                                        <option value="Communication">Communication</option>
+                                        <option value="Analytics">Analytics</option>
+                                        <option value="Development">Development</option>
+                                        <option value="Marketing">Marketing</option>
+                                        <option value="Finance">Finance</option>
+                                        <option value="HR">HR</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="status" class="form-label fw-semibold text-dark">Status <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="status" th:field="*{status}" required>
+                                        <option value="ACTIVE">ACTIVE</option>
+                                        <option value="INACTIVE">INACTIVE</option>
+                                        <option value="MAINTENANCE">MAINTENANCE</option>
+                                        <option value="DEPRECATED">DEPRECATED</option>
+                                    </select>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+                                </div>
+                            </div>
+
+                            <!-- Price and Offered By Row -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-12 col-md-6">
+                                    <label for="price" class="form-label fw-semibold text-dark">Price / Cost (USD)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" step="0.01" min="0" class="form-control" id="price" 
+                                               th:field="*{price}" placeholder="0.00">
+                                    </div>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="offeredBy" class="form-label fw-semibold text-dark">Offered By / Vendor</label>
+                                    <input type="text" class="form-control" id="offeredBy" th:field="*{offeredBy}" 
+                                           placeholder="e.g. Microsoft, Google, Atlassian">
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('offeredBy')}" th:errors="*{offeredBy}"></div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4 text-muted">
+
+                            <!-- Action Buttons -->
+                            <div class="d-flex justify-content-end gap-2">
+                                <a th:href="@{/tools}" class="btn btn-outline-secondary px-4">Cancel</a>
+                                <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                                    <i class="fa-solid fa-floppy-disk me-1"></i> Save Tool
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

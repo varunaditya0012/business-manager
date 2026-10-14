@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE">Business Tool Manager</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap 5.3 CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome 6 CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="d-flex">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar d-flex flex-column" id="sidebar">
+        <!-- Logo / Brand Header -->
+        <div class="sidebar-brand d-flex align-items-center">
+            <div class="brand-icon-wrapper me-3">
+                <i class="fa-solid fa-briefcase"></i>
+            </div>
+            <div class="brand-text">
+                <h4 class="m-0 fw-bold">BizTools</h4>
+                <small class="text-muted text-uppercase letter-spacing-1">Manager Hub</small>
+            </div>
+        </div>
+
+        <hr class="sidebar-divider my-2">
+
+        <!-- Navigation Links -->
+        <ul class="nav nav-pills flex-column mb-auto sidebar-nav">
+            <li class="nav-item">
+                <a th:href="@{/dashboard}" class="nav-link" 
+                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/dashboard') ? 'active' : ''}">
+                    <i class="fa-solid fa-tachometer-alt nav-icon"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/tools}" class="nav-link" 
+                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/tools') ? 'active' : ''}">
+                    <i class="fa-solid fa-wrench nav-icon"></i>
+                    <span>Tools</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/employees}" class="nav-link" 
+                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/employees') ? 'active' : ''}">
+                    <i class="fa-solid fa-users nav-icon"></i>
+                    <span>Employees</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/clients}" class="nav-link" 
+                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/clients') ? 'active' : ''}">
+                    <i class="fa-solid fa-handshake nav-icon"></i>
+                    <span>Clients</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a th:href="@{/projects}" class="nav-link" 
+                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/projects') ? 'active' : ''}">
+                    <i class="fa-solid fa-project-diagram nav-icon"></i>
+                    <span>Projects</span>
+                </a>
+            </li>
+        </ul>
+
+        <hr class="sidebar-divider my-3">
+
+        <!-- Sidebar Footer / User Info & Logout -->
+        <div class="sidebar-footer">
+            <div class="user-profile d-flex align-items-center mb-3">
+                <div class="user-avatar-circle me-3">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+                <div class="user-details overflow-hidden">
+                    <div class="user-name text-truncate text-white fw-semibold" sec:authentication="name">User</div>
+                    <span class="badge bg-primary-subtle text-primary-emphasis px-2 py-0 border border-primary-subtle rounded-pill user-badge">Logged In</span>
+                </div>
+            </div>
+            <form th:action="@{/logout}" method="post" class="m-0">
+                <button type="submit" class="btn btn-outline-danger w-100 btn-sm d-flex align-items-center justify-content-center gap-2 logout-btn">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- Main Content Wrapper -->
+    <div class="main-wrapper flex-grow-1 d-flex flex-column min-vh-100">
+        <!-- Topbar -->
+        <header class="topbar sticky-top d-flex align-items-center justify-content-between px-4 py-3 bg-white border-bottom shadow-sm">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-light d-md-none sidebar-toggle-btn" id="sidebarToggle" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <div class="topbar-title-area">
+                    <span class="text-secondary small fw-medium">Business Tool Manager</span>
+                    <h5 class="m-0 fw-bold text-dark" id="pageTitleText">Workspace</h5>
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center gap-3">
+                <div class="text-end d-none d-sm-block">
+                    <span class="text-muted small">Welcome,</span>
+                    <span class="fw-semibold text-dark" sec:authentication="name">User</span>
+                </div>
+                <div class="avatar-topbar">
+                    <i class="fa-solid fa-circle-user fa-xl text-primary"></i>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Body Fragment -->
+        <main class="content-body flex-grow-1 p-4" layout:fragment="content">
+            <!-- Page specific content will be injected here -->
+        </main>
+
+        <!-- Global Footer -->
+        <footer class="app-footer py-3 px-4 bg-white border-top text-center text-muted small">
+            <span>&copy; 2026 Business Tool Manager. All rights reserved.</span>
+        </footer>
+    </div>
+
+    <!-- Bootstrap 5.3 Bundle JS CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom Application JS -->
+    <script th:src="@{/js/app.js}"></script>
+</body>
+</html>

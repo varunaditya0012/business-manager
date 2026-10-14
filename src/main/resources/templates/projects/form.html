@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${project.id == null ? 'Add Project' : 'Edit Project'}">Project Form</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Form Header -->
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <div>
+                <a th:href="@{/projects}" class="btn btn-outline-secondary btn-sm mb-2">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Projects
+                </a>
+                <h2 class="fw-bold text-dark mb-1" th:text="${project.id == null ? 'Add New Project' : 'Edit Project'}">Project Form</h2>
+                <p class="text-muted mb-0">Set milestones, assign clients, and plan budget parameters</p>
+            </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+                <div class="card border-0 rounded-4 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <form th:action="@{/projects/save}" th:object="${project}" method="post" class="needs-validation" novalidate>
+                            <!-- Hidden inputs for ID and CSRF -->
+                            <input type="hidden" th:field="*{id}" />
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" th:if="${_csrf != null}"/>
+
+                            <!-- Project Name -->
+                            <div class="mb-4">
+                                <label for="name" class="form-label fw-semibold text-dark">Project Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control form-control-lg" id="name" th:field="*{name}" 
+                                       placeholder="e.g. ERP Cloud Modernization" required>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="mb-4">
+                                <label for="description" class="form-label fw-semibold text-dark">Description</label>
+                                <textarea class="form-control" id="description" th:field="*{description}" rows="4" 
+                                          placeholder="Detailed scope, deliverables, and architecture overview..."></textarea>
+                                <div class="text-danger small mt-1" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+                            </div>
+
+                            <!-- Client and Budget -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-12 col-md-6">
+                                    <label for="client" class="form-label fw-semibold text-dark">Assigned Client <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="client" th:field="*{client}" required>
+                                        <option value="">Select a client</option>
+                                        <option th:each="c : ${clients}" th:value="${c.id}" th:text="${c.companyName}">Client Name</option>
+                                    </select>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('client')}" th:errors="*{client}"></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="budget" class="form-label fw-semibold text-dark">Project Budget (USD)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" step="0.01" min="0" class="form-control" id="budget" 
+                                               th:field="*{budget}" placeholder="50000.00">
+                                    </div>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('budget')}" th:errors="*{budget}"></div>
+                                </div>
+                            </div>
+
+                            <!-- Status and Priority -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-12 col-md-6">
+                                    <label for="status" class="form-label fw-semibold text-dark">Status <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="status" th:field="*{status}" required>
+                                        <option value="NOT_STARTED">NOT_STARTED</option>
+                                        <option value="IN_PROGRESS">IN_PROGRESS</option>
+                                        <option value="ON_HOLD">ON_HOLD</option>
+                                        <option value="COMPLETED">COMPLETED</option>
+                                        <option value="CANCELLED">CANCELLED</option>
+                                    </select>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="priority" class="form-label fw-semibold text-dark">Priority <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="priority" th:field="*{priority}" required>
+                                        <option value="LOW">LOW</option>
+                                        <option value="MEDIUM">MEDIUM</option>
+                                        <option value="HIGH">HIGH</option>
+                                        <option value="URGENT">URGENT</option>
+                                    </select>
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}"></div>
+                                </div>
+                            </div>
+
+                            <!-- Start Date and End Date -->
+                            <div class="row g-3 mb-4">
+                                <div class="col-12 col-md-6">
+                                    <label for="startDate" class="form-label fw-semibold text-dark">Start Date</label>
+                                    <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <label for="endDate" class="form-label fw-semibold text-dark">Target End Date</label>
+                                    <input type="date" class="form-control" id="endDate" th:field="*{endDate}">
+                                    <div class="text-danger small mt-1" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}"></div>
+                                </div>
+                            </div>
+
+                            <hr class="my-4 text-muted">
+
+                            <!-- Action Buttons -->
+                            <div class="d-flex justify-content-end gap-2">
+                                <a th:href="@{/projects}" class="btn btn-outline-secondary px-4">Cancel</a>
+                                <button type="submit" class="btn btn-primary px-4 fw-semibold">
+                                    <i class="fa-solid fa-floppy-disk me-1"></i> Save Project
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

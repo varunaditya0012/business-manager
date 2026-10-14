@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <!-- Dashboard Header -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4">
+            <div>
+                <h2 class="fw-bold text-dark mb-1">Dashboard</h2>
+                <p class="text-muted mb-0">Welcome to your business management hub</p>
+            </div>
+            <div class="mt-3 mt-md-0 d-flex gap-2">
+                <a th:href="@{/tools/new}" class="btn btn-primary btn-sm px-3 shadow-sm">
+                    <i class="fa-solid fa-plus me-1"></i> New Tool
+                </a>
+                <a th:href="@{/projects/new}" class="btn btn-outline-primary btn-sm px-3">
+                    <i class="fa-solid fa-plus me-1"></i> New Project
+                </a>
+            </div>
+        </div>
+
+        <!-- 4 Stat Cards Row -->
+        <div class="row g-4 mb-4">
+            <!-- Total Tools Card -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card stat-blue p-4 rounded-4 shadow-sm position-relative overflow-hidden h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="stat-label text-white-50 text-uppercase fw-semibold small">Total Tools</span>
+                            <h2 class="stat-value text-white fw-bold my-2" 
+                                th:text="${totalTools != null ? totalTools : 0}">0</h2>
+                            <a th:href="@{/tools}" class="stat-link text-white small text-decoration-none">
+                                View inventory <i class="fa-solid fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                        <div class="stat-icon-wrapper rounded-3 bg-white bg-opacity-25 p-3 text-white">
+                            <i class="fa-solid fa-wrench fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Employees Card -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card stat-green p-4 rounded-4 shadow-sm position-relative overflow-hidden h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="stat-label text-white-50 text-uppercase fw-semibold small">Active Employees</span>
+                            <h2 class="stat-value text-white fw-bold my-2" 
+                                th:text="${activeEmployees != null ? activeEmployees : 0}">0</h2>
+                            <a th:href="@{/employees}" class="stat-link text-white small text-decoration-none">
+                                View directory <i class="fa-solid fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                        <div class="stat-icon-wrapper rounded-3 bg-white bg-opacity-25 p-3 text-white">
+                            <i class="fa-solid fa-users fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Clients Card -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card stat-orange p-4 rounded-4 shadow-sm position-relative overflow-hidden h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="stat-label text-white-50 text-uppercase fw-semibold small">Active Clients</span>
+                            <h2 class="stat-value text-white fw-bold my-2" 
+                                th:text="${activeClients != null ? activeClients : 0}">0</h2>
+                            <a th:href="@{/clients}" class="stat-link text-white small text-decoration-none">
+                                View partners <i class="fa-solid fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                        <div class="stat-icon-wrapper rounded-3 bg-white bg-opacity-25 p-3 text-white">
+                            <i class="fa-solid fa-handshake fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Projects Card -->
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="stat-card stat-purple p-4 rounded-4 shadow-sm position-relative overflow-hidden h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <span class="stat-label text-white-50 text-uppercase fw-semibold small">Active Projects</span>
+                            <h2 class="stat-value text-white fw-bold my-2" 
+                                th:text="${activeProjects != null ? activeProjects : 0}">0</h2>
+                            <a th:href="@{/projects}" class="stat-link text-white small text-decoration-none">
+                                View timeline <i class="fa-solid fa-arrow-right ms-1"></i>
+                            </a>
+                        </div>
+                        <div class="stat-icon-wrapper rounded-3 bg-white bg-opacity-25 p-3 text-white">
+                            <i class="fa-solid fa-project-diagram fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Two-column Section: Recent Tools & Recent Projects -->
+        <div class="row g-4">
+            <!-- Left Column: Recent Tools -->
+            <div class="col-12 col-lg-6">
+                <div class="card border-0 rounded-4 shadow-sm h-100">
+                    <div class="card-header bg-white border-0 pt-4 px-4 pb-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold text-dark m-0">Recent Tools</h5>
+                            <small class="text-muted">Newly cataloged software & hardware</small>
+                        </div>
+                        <a th:href="@{/tools}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">View All</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0 custom-table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="ps-4">Name</th>
+                                        <th>Category</th>
+                                        <th class="pe-4 text-end">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="tool : ${recentTools}">
+                                        <td class="ps-4">
+                                            <a th:href="@{/tools/{id}(id=${tool.id})}" class="fw-semibold text-decoration-none text-dark hover-primary" 
+                                               th:text="${tool.name}">Tool Name</a>
+                                        </td>
+                                        <td th:text="${tool.category}">Category</td>
+                                        <td class="pe-4 text-end">
+                                            <span th:if="${tool.status != null and tool.status.name() == 'ACTIVE'}" class="badge bg-success">Active</span>
+                                            <span th:if="${tool.status != null and tool.status.name() == 'INACTIVE'}" class="badge bg-danger">Inactive</span>
+                                            <span th:if="${tool.status != null and tool.status.name() == 'MAINTENANCE'}" class="badge bg-warning text-dark">Maintenance</span>
+                                            <span th:if="${tool.status != null and tool.status.name() == 'DEPRECATED'}" class="badge bg-secondary">Deprecated</span>
+                                            <span th:if="${tool.status != null and tool.status.name() != 'ACTIVE' and tool.status.name() != 'INACTIVE' and tool.status.name() != 'MAINTENANCE' and tool.status.name() != 'DEPRECATED'}" 
+                                                  class="badge bg-info" th:text="${tool.status}">Status</span>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(recentTools)}">
+                                        <td colspan="3" class="text-center py-4 text-muted">
+                                            <i class="fa-solid fa-box-open fa-2x mb-2 text-secondary opacity-50 d-block"></i>
+                                            <span>No recent tools found</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column: Recent Projects -->
+            <div class="col-12 col-lg-6">
+                <div class="card border-0 rounded-4 shadow-sm h-100">
+                    <div class="card-header bg-white border-0 pt-4 px-4 pb-2 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="fw-bold text-dark m-0">Recent Projects</h5>
+                            <small class="text-muted">Ongoing initiatives and contracts</small>
+                        </div>
+                        <a th:href="@{/projects}" class="btn btn-outline-secondary btn-sm rounded-pill px-3">View All</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0 custom-table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="ps-4">Name</th>
+                                        <th>Status</th>
+                                        <th class="pe-4 text-end">Priority</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="project : ${recentProjects}">
+                                        <td class="ps-4">
+                                            <a th:href="@{/projects/{id}(id=${project.id})}" class="fw-semibold text-decoration-none text-dark hover-primary" 
+                                               th:text="${project.name}">Project Alpha</a>
+                                        </td>
+                                        <td>
+                                            <span th:if="${project.status != null and project.status.name() == 'ACTIVE'}" class="badge bg-success">Active</span>
+                                            <span th:if="${project.status != null and project.status.name() == 'IN_PROGRESS'}" class="badge bg-primary">In Progress</span>
+                                            <span th:if="${project.status != null and project.status.name() == 'COMPLETED'}" class="badge bg-success">Completed</span>
+                                            <span th:if="${project.status != null and project.status.name() == 'NOT_STARTED'}" class="badge bg-secondary">Not Started</span>
+                                            <span th:if="${project.status != null and project.status.name() == 'ON_HOLD'}" class="badge bg-warning text-dark">On Hold</span>
+                                            <span th:if="${project.status != null and project.status.name() == 'CANCELLED'}" class="badge bg-danger">Cancelled</span>
+                                            <span th:if="${project.status != null and project.status.name() != 'ACTIVE' and project.status.name() != 'IN_PROGRESS' and project.status.name() != 'COMPLETED' and project.status.name() != 'NOT_STARTED' and project.status.name() != 'ON_HOLD' and project.status.name() != 'CANCELLED'}" 
+                                                  class="badge bg-info" th:text="${project.status}">Status</span>
+                                        </td>
+                                        <td class="pe-4 text-end">
+                                            <span th:if="${project.priority != null and project.priority.name() == 'LOW'}" class="badge bg-info text-dark">Low</span>
+                                            <span th:if="${project.priority != null and project.priority.name() == 'MEDIUM'}" class="badge bg-primary">Medium</span>
+                                            <span th:if="${project.priority != null and project.priority.name() == 'HIGH'}" class="badge bg-warning text-dark">High</span>
+                                            <span th:if="${project.priority != null and project.priority.name() == 'URGENT'}" class="badge bg-danger">Urgent</span>
+                                            <span th:if="${project.priority != null and project.priority.name() != 'LOW' and project.priority.name() != 'MEDIUM' and project.priority.name() != 'HIGH' and project.priority.name() != 'URGENT'}" 
+                                                  class="badge bg-secondary" th:text="${project.priority}">Priority</span>
+                                        </td>
+                                    </tr>
+                                    <tr th:if="${#lists.isEmpty(recentProjects)}">
+                                        <td colspan="3" class="text-center py-4 text-muted">
+                                            <i class="fa-solid fa-folder-open fa-2x mb-2 text-secondary opacity-50 d-block"></i>
+                                            <span>No recent projects found</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
