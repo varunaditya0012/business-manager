@@ -22,15 +22,15 @@
         </div>
 
         <!-- Flash Messages -->
-        <div th:if="${successMessage}" class="alert alert-success alert-dismissible fade show d-flex align-items-center mb-4" role="alert">
+        <div th:if="${success != null or successMessage != null}" class="alert alert-success alert-dismissible fade show d-flex align-items-center mb-4" role="alert">
             <i class="fa-solid fa-circle-check me-2 fa-lg"></i>
-            <div th:text="${successMessage}">Operation completed successfully!</div>
+            <div th:text="${success != null ? success : successMessage}">Operation completed successfully!</div>
             <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
-        <div th:if="${errorMessage}" class="alert alert-danger alert-dismissible fade show d-flex align-items-center mb-4" role="alert">
+        <div th:if="${error != null or errorMessage != null}" class="alert alert-danger alert-dismissible fade show d-flex align-items-center mb-4" role="alert">
             <i class="fa-solid fa-circle-exclamation me-2 fa-lg"></i>
-            <div th:text="${errorMessage}">An error occurred while processing your request.</div>
+            <div th:text="${error != null ? error : errorMessage}">An error occurred while processing your request.</div>
             <button type="button" class="btn-close ms-auto" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
 
@@ -93,7 +93,7 @@
                                           class="badge bg-info" th:text="${tool.status}">Status</span>
                                 </td>
                                 <td class="fw-semibold" th:text="${tool.price != null ? '$' + #numbers.formatDecimal(tool.price, 1, 2) : 'Free'}">$0.00</td>
-                                <td th:text="${tool.offeredBy != null ? tool.offeredBy : '-'}">Vendor</td>
+                                <td th:text="${tool.offeredBy != null ? (tool.offeredBy.fullName != null and !tool.offeredBy.fullName.isEmpty() ? tool.offeredBy.fullName : tool.offeredBy.username) : '-'}">Vendor</td>
                                 <td class="pe-4 text-end">
                                     <div class="d-inline-flex gap-1">
                                         <a th:href="@{/tools/{id}(id=${tool.id})}" class="btn btn-sm btn-outline-info" title="View details">

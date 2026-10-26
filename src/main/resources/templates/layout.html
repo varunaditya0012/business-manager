@@ -40,36 +40,31 @@
         <!-- Navigation Links -->
         <ul class="nav nav-pills flex-column mb-auto sidebar-nav">
             <li class="nav-item">
-                <a th:href="@{/dashboard}" class="nav-link" 
-                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/dashboard') ? 'active' : ''}">
+                <a th:href="@{/dashboard}" class="nav-link">
                     <i class="fa-solid fa-tachometer-alt nav-icon"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a th:href="@{/tools}" class="nav-link" 
-                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/tools') ? 'active' : ''}">
+                <a th:href="@{/tools}" class="nav-link">
                     <i class="fa-solid fa-wrench nav-icon"></i>
                     <span>Tools</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a th:href="@{/employees}" class="nav-link" 
-                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/employees') ? 'active' : ''}">
+                <a th:href="@{/employees}" class="nav-link">
                     <i class="fa-solid fa-users nav-icon"></i>
                     <span>Employees</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a th:href="@{/clients}" class="nav-link" 
-                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/clients') ? 'active' : ''}">
+                <a th:href="@{/clients}" class="nav-link">
                     <i class="fa-solid fa-handshake nav-icon"></i>
                     <span>Clients</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a th:href="@{/projects}" class="nav-link" 
-                   th:classappend="${#httpServletRequest != null and #httpServletRequest.requestURI.startsWith('/projects') ? 'active' : ''}">
+                <a th:href="@{/projects}" class="nav-link">
                     <i class="fa-solid fa-project-diagram nav-icon"></i>
                     <span>Projects</span>
                 </a>

@@ -19,6 +19,12 @@ public class UserService {
     
     public User registerUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        if (user.getRole() == null) {
+            user.setRole(User.Role.USER);
+        }
+        if (user.getEnabled() == null) {
+            user.setEnabled(true);
+        }
         return userRepository.save(user);
     }
     

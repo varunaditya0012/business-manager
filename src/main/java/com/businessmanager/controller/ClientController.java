@@ -49,14 +49,14 @@ public class ClientController {
         return "redirect:/clients";
     }
     
-    @GetMapping("/delete/{id}")
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.GET, RequestMethod.POST})
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         clientService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Client deleted successfully!");
         return "redirect:/clients";
     }
     
-    @GetMapping("/view/{id}")
+    @GetMapping({"/view/{id}", "/{id}"})
     public String view(@PathVariable Long id, Model model) {
         Client client = clientService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Client not found"));

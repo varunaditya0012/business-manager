@@ -49,14 +49,14 @@ public class EmployeeController {
         return "redirect:/employees";
     }
     
-    @GetMapping("/delete/{id}")
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.GET, RequestMethod.POST})
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         employeeService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Employee deleted successfully!");
         return "redirect:/employees";
     }
     
-    @GetMapping("/view/{id}")
+    @GetMapping({"/view/{id}", "/{id}"})
     public String view(@PathVariable Long id, Model model) {
         Employee employee = employeeService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Employee not found"));

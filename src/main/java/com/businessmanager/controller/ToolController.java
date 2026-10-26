@@ -53,20 +53,26 @@ public class ToolController {
         if (tool.getId() == null) {
             User user = userService.findByUsername(authentication.getName()).orElse(null);
             tool.setOfferedBy(user);
+        } else {
+            toolService.findById(tool.getId()).ifPresent(existing -> {
+                if (tool.getOfferedBy() == null) {
+                    tool.setOfferedBy(existing.getOfferedBy());
+                }
+            });
         }
         toolService.save(tool);
         redirectAttributes.addFlashAttribute("success", "Tool saved successfully!");
         return "redirect:/tools";
     }
     
-    @GetMapping("/delete/{id}")
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.GET, RequestMethod.POST})
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         toolService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Tool deleted successfully!");
         return "redirect:/tools";
     }
     
-    @GetMapping("/view/{id}")
+    @GetMapping({"/view/{id}", "/{id}"})
     public String view(@PathVariable Long id, Model model) {
         Tool tool = toolService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tool not found"));

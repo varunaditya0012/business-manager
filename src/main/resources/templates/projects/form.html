@@ -70,21 +70,14 @@
                                 <div class="col-12 col-md-6">
                                     <label for="status" class="form-label fw-semibold text-dark">Status <span class="text-danger">*</span></label>
                                     <select class="form-select" id="status" th:field="*{status}" required>
-                                        <option value="NOT_STARTED">NOT_STARTED</option>
-                                        <option value="IN_PROGRESS">IN_PROGRESS</option>
-                                        <option value="ON_HOLD">ON_HOLD</option>
-                                        <option value="COMPLETED">COMPLETED</option>
-                                        <option value="CANCELLED">CANCELLED</option>
+                                        <option th:each="st : ${statuses}" th:value="${st}" th:text="${st}">PLANNING</option>
                                     </select>
                                     <div class="text-danger small mt-1" th:if="${#fields.hasErrors('status')}" th:errors="*{status}"></div>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <label for="priority" class="form-label fw-semibold text-dark">Priority <span class="text-danger">*</span></label>
                                     <select class="form-select" id="priority" th:field="*{priority}" required>
-                                        <option value="LOW">LOW</option>
-                                        <option value="MEDIUM">MEDIUM</option>
-                                        <option value="HIGH">HIGH</option>
-                                        <option value="URGENT">URGENT</option>
+                                        <option th:each="pr : ${priorities}" th:value="${pr}" th:text="${pr}">MEDIUM</option>
                                     </select>
                                     <div class="text-danger small mt-1" th:if="${#fields.hasErrors('priority')}" th:errors="*{priority}"></div>
                                 </div>

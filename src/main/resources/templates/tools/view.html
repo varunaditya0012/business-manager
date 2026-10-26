@@ -56,8 +56,8 @@
                         <!-- Information Grid -->
                         <div class="row g-4 mb-4">
                             <div class="col-12 col-sm-6">
-                                <label class="text-muted small text-uppercase fw-semibold">Offered By / Vendor</label>
-                                <div class="fs-6 fw-medium text-dark mt-1" th:text="${tool.offeredBy != null ? tool.offeredBy : 'N/A'}">Microsoft</div>
+                                <label class="text-muted small text-uppercase fw-semibold">Offered By / Registered By</label>
+                                <div class="fs-6 fw-medium text-dark mt-1" th:text="${tool.offeredBy != null ? (tool.offeredBy.fullName != null and !tool.offeredBy.fullName.isEmpty() ? tool.offeredBy.fullName : tool.offeredBy.username) : 'N/A'}">Microsoft</div>
                             </div>
                             <div class="col-12 col-sm-6">
                                 <label class="text-muted small text-uppercase fw-semibold">Price / License Cost</label>

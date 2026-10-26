@@ -57,14 +57,14 @@ public class ProjectController {
         return "redirect:/projects";
     }
     
-    @GetMapping("/delete/{id}")
+    @RequestMapping(value = "/delete/{id}", method = {RequestMethod.GET, RequestMethod.POST})
     public String delete(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         projectService.deleteById(id);
         redirectAttributes.addFlashAttribute("success", "Project deleted successfully!");
         return "redirect:/projects";
     }
     
-    @GetMapping("/view/{id}")
+    @GetMapping({"/view/{id}", "/{id}"})
     public String view(@PathVariable Long id, Model model) {
         Project project = projectService.findById(id)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
